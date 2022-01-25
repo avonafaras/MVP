@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import AllPlayersList from './AllPlayersList.jsx';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -7,7 +9,9 @@ class App extends React.Component {
 
   render() {
     return(
-      <div>HELLO </div>
+      <div>
+        <AllPlayersList />
+      </div>
     )
   }
   }
