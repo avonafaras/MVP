@@ -1,16 +1,11 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
+import SearchBar from './SearchBar.jsx'
 
 const AllPlayersList = () => {
   const [players, setPlayers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     axios.get('/players/league/standard')
@@ -19,10 +14,16 @@ const AllPlayersList = () => {
     })
   }, [])
 
-//  var playersIds
-
   return (
-    <div>Heyy</div>
+    <div><SearchBar players={players} searchTerm={searchTerm} setSearchTerm={setSearchTerm} searchResults={searchResults} setSearchResults={setSearchResults} /></div>
+    // <div>
+    //     <ul>{
+    //       searchResults.map((item, index) => (
+    //         <div>{item.lastName}</div>
+    //       ))
+    //     }
+    //     </ul>
+    //   </div>
   )
 }
 
