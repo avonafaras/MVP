@@ -12,7 +12,7 @@ const AllPlayersList = () => {
   }, [])
 
   return (
-    <div>Hey</div>
+    <div>Heyy</div>
   )
 }
 
