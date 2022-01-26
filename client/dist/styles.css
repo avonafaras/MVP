@@ -1,0 +1,87 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+body {
+  background-color: #003049;
+  color: white
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nonwrap;
+  overflow-x: auto;
+  width: 90%;
+  align-items: left;
+	padding: 10px;
+  border-radius: 5px;
+	/* margin: 45px auto; */
+  box-shadow: 0 1.5px 0 0 rgba(0,0,0,0.1);
+  font-size: 0.9rem;
+  font-family: 'Poppins';
+  margin-left: 3%;
+}
+
+.item {
+    padding: 2px;
+    margin: 2px;
+    border-radius: 3px;
+
+}
+
+.searchContainer {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 260px;
+  margin-right: 20px;
+
+}
+
+.searchInput {
+  height: 20px;
+  width: 100%;
+  padding: 5px 10px 5px 40px;
+  border: 1px solid #f77f00;
+  background: url(https://i.imgur.com/lrQiTER.png) no-repeat 1% #f77f00;
+  background-size: 20px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.searchButton {
+  flex-shrink: 0;
+  width: 60px;
+  height: 30px;
+  border: none;
+  background-color: #f77f00;
+  color: white;
+  padding: 0px;
+  cursor: pointer;
+}
+
+.header {
+  padding: 60px;
+  text-align: center;
+  background: url(https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80) repeat;
+  color: white;
+  font-size: 30px;
+}

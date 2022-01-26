@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
-import SearchBar from './SearchBar.jsx'
+import SearchBar from './SearchBar.jsx';
+import PlayersListEntry from './PlayersListEntry.jsx';
 
 const AllPlayersList = () => {
   const [players, setPlayers] = useState([]);
@@ -15,15 +16,23 @@ const AllPlayersList = () => {
   }, [])
 
   return (
-    <div><SearchBar players={players} searchTerm={searchTerm} setSearchTerm={setSearchTerm} searchResults={searchResults} setSearchResults={setSearchResults} /></div>
-    // <div>
-    //     <ul>{
-    //       searchResults.map((item, index) => (
-    //         <div>{item.lastName}</div>
-    //       ))
-    //     }
-    //     </ul>
-    //   </div>
+    <div>
+    <div className="container"> <SearchBar players={players} searchTerm={searchTerm} setSearchTerm={setSearchTerm} searchResults={searchResults} setSearchResults={setSearchResults}/> </div>
+     <div>
+     {searchResults ?
+        <ul>{
+          searchResults.map((item, index) => {
+            return (
+              <div key={index}>
+                <PlayersListEntry data={item}/>
+              </div>
+            )
+          })
+        }
+        </ul>
+        : null}
+      </div>
+      </div>
   )
 }
 
