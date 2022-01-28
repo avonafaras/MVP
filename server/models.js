@@ -14,6 +14,10 @@ const config = require('../config.js');
 
     getAllGamesStatistics() {
       return axios.get(`${url}/games/league/standard/2021`, {headers});
+    },
+
+    getPersonalStats(playerId) {
+      return axios.get(`${url}/statistics/players/playerId/${playerId}`, {headers})
     }
 
   }
