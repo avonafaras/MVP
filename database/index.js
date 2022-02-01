@@ -51,7 +51,7 @@ module.exports = {
         assists, pfouls, steals, turnovers, blocks, plusminus, playerid)
         VALUES ${values.join(',')}`
 
-  // pool.query(sqlQuery)
+  pool.query(sqlQuery)
    },
 
 
@@ -61,6 +61,53 @@ module.exports = {
 
   getTopPlayers() {
     return pool.query('SELECT * FROM top_scorers')
-  }
+  },
+
+  getPersonalStats(playerId) {
+    return pool.query(`SELECT * FROM player_statistics p
+    INNER JOIN game_statistics g
+    ON p.gameid = g.gameId
+     WHERE playerid=${playerId}`)
+  },
+
+  // saveGamesToDb(data) {
+  //   let sqlQuery = `INSERT INTO game_statistics(seasonyear, league, gameid, vteam_teamid, vteam_shortname, vteam_fullname, vteam_logo, vteam_score,
+  //     hteam_teamid, hteam_shortname, hteam_fullname, hteam_logo, hteam_score)
+  //     VALUES(${data.seasonYear}, ${data.league}, ${data.gameId}, ${data.vTeam[teamId]},
+  //       ${data.vTeam[shortName]}, ${data.vTea[fullName]}, ${data.vTeam[logo]}, ${data.vTeam[score]},
+  //       ${data.hTeam[teamId]}, ${data.hTeam[shortName]}, ${data.hTeam[fullName]}, ${data.hTeam[logo]}, $data.hTeam[score])`;
+  //       console.log("sqlquery: ", sqlQuery);
+  //       pool.query(sqlQuery)
+  // }
+
+  saveGamesToDb(allData) {
+    let values =
+    allData
+    .filter(data => data.hTeam && data.vTeam && data.hTeam.score && data.vTeam.score && data.hTeam.score.points && data.vTeam.score.points)
+    // .filter(data => (data.seasonYear &&
+    //   data.gameId &&
+    //   data.league &&
+    //   data.vTeam.teamId &&
+    //   data.vTeam.shortName &&
+    //   data.vTeam.fullName &&
+    //   data.vTeam.logo &&
+    //   data.vTeam.score &&
+    //   data.hTeam.shortName &&
+    //   data.hTeam.fullName &&
+    //   data.hTeam.logo &&
+    //   data.hTeam.score))
+     .map(data => (
+      (`(${data.seasonYear}, '${data.league}', ${data.gameId}, ${data.vTeam.teamId}, '${data.vTeam.shortName}',
+      '${data.vTeam.fullName}', '${data.vTeam.logo}', ${data.vTeam.score.points}, ${data.hTeam.teamId}, '${data.hTeam.shortName}', '${data.hTeam.fullName}', '${data.hTeam.logo}', ${data.hTeam.score.points})`)));
+
+
+
+    let sqlQuery = `INSERT INTO game_statistics (seasonyear, league, gameid, vteam_teamid, vteam_shortname, vteam_fullname, vteam_logo, vteam_score,hteam_teamid, hteam_shortname, hteam_fullname, hteam_logo, hteam_score)
+        VALUES ${values.join(',')}`
+
+        console.log("sqlQuery:", sqlQuery);
+
+        return pool.query(sqlQuery)
+   },
 
 }

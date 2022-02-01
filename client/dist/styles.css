@@ -76,7 +76,7 @@ body {
   flex-shrink: 0;
   width: 60px;
   height: 3rem;
-  border: 1px solid #f77f00;ne;
+  border: 1px solid #f77f00;
   background-color: #f77f00;
   color: white;
   padding: 0px;
@@ -91,6 +91,7 @@ body {
   color: white;
   font-size: 5rem;
   font-family: 'Bebas Neue', cursive;
+  position: relative;
 }
 
 .table {
@@ -104,4 +105,10 @@ body {
 
 .divv {
   margin-top: 3% ;
+}
+
+.favoriteButton {
+  position: absolute;
+  right: 0;
+  top: 0;
 }

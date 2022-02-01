@@ -20,4 +20,8 @@ const config = require('../config.js');
       return axios.get(`${url}/statistics/players/playerId/${playerId}`, {headers})
     }
 
+    // getAllTeamsStatistics() {
+
+    // }
+
   }

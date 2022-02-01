@@ -1,7 +1,6 @@
 import React, { useState, useEffect} from 'react';
 
 
-
 const SearchBar = ({players, setSearchTerm, searchTerm, setSearchResults, searchResults}) => {
   const handleChange = event => {
     event.preventDefault();
@@ -16,11 +15,12 @@ const SearchBar = ({players, setSearchTerm, searchTerm, setSearchResults, search
     }
   }, [searchTerm]);
 
+
   return (
       <div className="qaItem">
       <div className="searchContainer">
         <input className="searchInput" type="text" value={searchTerm} onChange={handleChange} placeholder="Enter player's name" />
-        <button className="searchButton">Search</button>
+
       </div>
     </div>
     )

@@ -14,6 +14,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
 const MainListEntry = ({playerId}) => {
   const [sortedData, setSortedData] = useState([])
@@ -24,29 +25,29 @@ const MainListEntry = ({playerId}) => {
     .then((data) => {
       setSortedData(data)
 
-      function createData(matchup, points, min, fgm, tpa, totReb, assists) {
-        return { matchup, points, min, fgm, tpa, totReb, assists};
+      function createData(vTeam, hTeam, points, tpa, totReb, assists) {
+        return { vTeam, hTeam, points, tpa, totReb, assists};
       }
 
       if (data && data.hasOwnProperty('data') && data !== 'undefined') {
-        var rows1 = data.data.map(gameData => createData('MATCHUP', gameData.points, gameData.min, gameData.fgm, gameData.tpa, gameData.totReb, gameData.assists))
+        var rows1 = data.data.map(gameData => {
+          return createData( gameData.vteam_logo, gameData.hteam_logo, gameData.points, (gameData.tpa/gameData.tpm).toFixed(2), gameData.totReb, gameData.assists)}
+          )
         setRows(rows1);
       }
-
-
     })
-  })
-
+  }, [])
 
   return (
-    <div>
       <div className="container">
+      <Grid container spacing={0}>
+      <Grid item xs={4}>
       <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
         height="100%"
         image="./203500.png"
-        alt="green iguana"
+        alt="steve adams"
         sx={{
           backgroundColor: "#003049",
           fontFamily: "Bebas Neue, cursive"
@@ -55,7 +56,7 @@ const MainListEntry = ({playerId}) => {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Steve Adams
+
         </Typography>
         <Typography variant="body2" color="text.secondary">
 
@@ -65,16 +66,16 @@ const MainListEntry = ({playerId}) => {
         <Button size="small">Add to favorites</Button>
       </CardActions>
     </Card>
-    </div>
+    </Grid>
+    <Grid item xs={8}>
     <h2>Last 5 games stats</h2>
     <TableContainer component={Paper}>
     <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
       <TableHead>
         <TableRow>
-          <TableCell>MATCHUP</TableCell>
+          <TableCell align="left">vTeam</TableCell>
+          <TableCell align="left">hTeam</TableCell>
           <TableCell align="right">Points</TableCell>
-          <TableCell align="right">Min</TableCell>
-          <TableCell align="right">fgm/fga/fgp</TableCell>
           <TableCell align="right">tpa/tpm</TableCell>
           <TableCell align="right">totReb</TableCell>
           <TableCell align="right">assists</TableCell>
@@ -86,12 +87,13 @@ const MainListEntry = ({playerId}) => {
             key={row.name}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
-            <TableCell component="th" scope="row">
-              {row.name}
+            <TableCell  component="th" scope="row">
+              <img src={row.vTeam} align="left" width="45px" height="40px"/>
+            </TableCell>
+            <TableCell  component="th" align="left" scope="row">
+              <img src={row.hTeam} width="45px" height="40px"/>
             </TableCell>
             <TableCell align="right">{row.points}</TableCell>
-            <TableCell align="right">{row.min}</TableCell>
-            <TableCell align="right">{row.fgm}</TableCell>
             <TableCell align="right">{row.tpa}</TableCell>
             <TableCell align="right">{row.totReb}</TableCell>
             <TableCell align="right">{row.assists}</TableCell>
@@ -100,6 +102,8 @@ const MainListEntry = ({playerId}) => {
       </TableBody>
     </Table>
   </TableContainer>
+  </Grid>
+  </Grid>
 
     </div>
 

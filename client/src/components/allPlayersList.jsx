@@ -3,7 +3,7 @@ import axios from 'axios';
 import SearchBar from './SearchBar.jsx';
 import PlayersListEntry from './PlayersListEntry.jsx';
 
-const AllPlayersList = () => {
+const AllPlayersList = ({playersIdsList, setPlayersIdsList}) => {
   const [players, setPlayers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -17,14 +17,14 @@ const AllPlayersList = () => {
 
   return (
     <div>
-    <div className="container"> <SearchBar players={players} searchTerm={searchTerm} setSearchTerm={setSearchTerm} searchResults={searchResults} setSearchResults={setSearchResults}/> </div>
+    <div className="container"> <SearchBar players={players} searchTerm={searchTerm} setSearchTerm={setSearchTerm} searchResults={searchResults} setSearchResults={setSearchResults} /> </div>
      <div>
      {searchResults ?
         <ul>{
           searchResults.map((item, index) => {
             return (
               <div key={index}>
-                <PlayersListEntry data={item}/>
+                <PlayersListEntry data={item} playersIdsList={playersIdsList} setPlayersIdsList={setPlayersIdsList}/>
               </div>
             )
           })
