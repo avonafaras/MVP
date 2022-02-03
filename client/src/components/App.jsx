@@ -21,7 +21,7 @@ const App = () => {
   const handleClick = () => {
     axios.get('/myplayers')
     .then((data) => {
-    var playerisds = data.data.rows.map(item => item.playerid)
+    var playerisds = data.data.rows.map(item => item.playerid);
     setPlayersIdsList(playerisds);
     })
   }
@@ -71,7 +71,7 @@ const App = () => {
         <Header handleClick={handleClick} playersIdsList={playersIdsList} setPlayersIdsList={setPlayersIdsList}/>
 
         <AllPlayersList playersIdsList={playersIdsList} setPlayersIdsList={setPlayersIdsList} />
-        <MainList playersIdsList={playersIdsList} />
+        <MainList playersIdsList={playersIdsList} setPlayersIdsList={setPlayersIdsList} handleClick={handleClick} />
         <TopPlayers/>
 
       </div>

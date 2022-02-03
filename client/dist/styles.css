@@ -85,13 +85,14 @@ body {
 
 .header {
   padding: 60px;
-  height: 6rem;
+  height: 8rem;
   text-align: center;
   background: url(https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80) repeat 1%;
   color: white;
-  font-size: 5rem;
+  font-size: 6rem;
   font-family: 'Bebas Neue', cursive;
   position: relative;
+
 }
 
 .table {

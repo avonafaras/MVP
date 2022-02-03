@@ -15,12 +15,20 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
-const MainListEntry = ({playerId}) => {
+const MainListEntry = ({playerId, playersIdsList, setPlayersIdsList, handleClick}) => {
   const [sortedData, setSortedData] = useState([])
   const [rows, setRows] = useState([]);
   const [name, setName] = useState('');
-  const [picture, setPicture] = useState('')
+  const [picture, setPicture] = useState('');
+  const [dateofbirth, setDdateofbirth] = useState('');
+  const [startnba, setStartnba] = useState('');
+  const [heightinmeters,setHeightInMeters] = useState('');
+  const [weightinkilograms, setweightInKilograms] = useState('');
+  const [country, setCountry] = useState('');
+  const [favoriteClicked, setfavoriteClicked] = useState(false);
 
   useEffect(() => {
     axios.get(`/statistics/players/playerId/${playerId}`)
@@ -28,6 +36,11 @@ const MainListEntry = ({playerId}) => {
       setSortedData(data)
       setName(data.data[0].firstname + ' ' +data.data[0].lastname  )
       setPicture(data.data[0].pictures)
+      setDdateofbirth(data.data[0].dateofbirth)
+      setStartnba(data.data[0].startnba)
+      setHeightInMeters(data.data[0].heightinmeters)
+      setweightInKilograms(data.data[0].weightinkilograms)
+      setCountry(data.data[0].country)
 
       function createData(vTeam, hTeam, points, tpa, totReb, assists) {
         return { vTeam, hTeam, points, tpa, totReb, assists};
@@ -44,11 +57,25 @@ const MainListEntry = ({playerId}) => {
 
   const addToFav = () => {
     axios.post('/myplayers', {id: playerId})
+    setfavoriteClicked(true);
   }
 
   const deletePlayer = () => {
     axios.delete(`/myplayers/${playerId}`)
-    .then(() => {})
+    .then(() => {
+      handleClick()
+      // var index = playersIdsList.indexOf(playerId);
+      // if (index !== -1) {
+      //   playersIdsList.splice(index, 1);
+      //   useEffect(() => {
+      //     setPlayersIdsList(playersIdsList)
+      //   })
+
+      //   console.log('playersIdsList:', playersIdsList);
+      // }
+    })
+
+
   }
 
   return (
@@ -72,12 +99,26 @@ const MainListEntry = ({playerId}) => {
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
+             Date of Birth: {dateofbirth}
+             </Typography>
+             <Typography variant="body2" color="text.secondary">
+              Country: {country}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Start Nba: {startnba}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                Weight: {weightinkilograms} kg
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                Height: {heightinmeters} m
+                </Typography>
 
-        </Typography>
+
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={addToFav}>Add to favorites</Button>
-        <Button size="small" onClick={deletePlayer}>Delete</Button>
+        <Button size="small"  onClick={addToFav}>{<FavoriteIcon style={{ color: '#003049' }} />}</Button>
+        <Button size="small" onClick={deletePlayer}>{<RemoveCircleIcon style={{ color: '#003049 '}} />}</Button>
       </CardActions>
     </Card>
     </Grid>
@@ -102,10 +143,10 @@ const MainListEntry = ({playerId}) => {
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell  component="th" scope="row">
-              <img src={row.vTeam} align="left" width="45px" height="43px"/>
+              <img src={row.vTeam} align="left" width="60px" height="63px"/>
             </TableCell>
             <TableCell  component="th" align="left" scope="row">
-              <img src={row.hTeam} width="45px" height="43px"/>
+              <img src={row.hTeam} width="60px" height="63px"/>
             </TableCell>
             <TableCell align="right">{row.points}</TableCell>
             <TableCell align="right">{row.tpa}</TableCell>

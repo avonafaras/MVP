@@ -1,4 +1,6 @@
 import React, { useState, useEffect} from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 
 const SearchBar = ({players, setSearchTerm, searchTerm, setSearchResults, searchResults}) => {
@@ -20,7 +22,6 @@ const SearchBar = ({players, setSearchTerm, searchTerm, setSearchResults, search
       <div className="qaItem">
       <div className="searchContainer">
         <input className="searchInput" type="text" value={searchTerm} onChange={handleChange} placeholder="Enter player's name" />
-
       </div>
     </div>
     )
