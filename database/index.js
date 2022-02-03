@@ -64,10 +64,10 @@ module.exports = {
   },
 
   getPersonalStats(playerId) {
-    return pool.query(`SELECT * FROM player_statistics p
-    INNER JOIN game_statistics g
-    ON p.gameid = g.gameId
-     WHERE playerid=${playerId}`)
+    return pool.query(` SELECT * FROM player_statistics p
+    INNER JOIN game_statistics g ON p.gameid = g.gameId
+    INNER JOIN players pl ON p.playerid = pl.id
+    WHERE playerid=${playerId}`)
   },
 
   // saveGamesToDb(data) {
@@ -109,5 +109,12 @@ module.exports = {
 
         return pool.query(sqlQuery)
    },
+   getFavoritePlayers() {
+     return pool.query(`SELECT * FROM myplayers`)
+   },
+
+   addPlayer(id) {
+     return pool.query(`INSERT INTO myplayers (playerid) VALUES(${id})`)
+   }
 
 }

@@ -64,6 +64,17 @@ app.get('/topplayers', (req,res) => {
   .catch(err => res.status(404).send(err))
 })
 
+app.get('/myplayers', (req, res) => {
+  db.getFavoritePlayers()
+  .then((data) => res.status(200).send(data))
+  .catch((err) => res.status(404).send(err))
+})
+
+app.post('/myplayers', (req, res) => {
+  db.addPlayer(req.body.id)
+  .then(() => console.log('success'))
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 })

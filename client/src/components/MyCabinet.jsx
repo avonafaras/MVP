@@ -13,11 +13,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
+import Grid from '@mui/material/Grid';
 
 const MyCabinet = () => {
 const [isClicked, setClicked] = useState(false);
 const [sortedData, setSortedData] = useState([])
-const [rows, setRows] = useState([])
+const [rows, setRows] = useState([]);
+const [name, setName] = useState('');
+const [picture, setPicture] = useState('')
 
 
 const handleClick = () => {
@@ -25,106 +28,98 @@ const handleClick = () => {
 }
 
 useEffect(() => {
-  axios.get('/statistics/players/playerId/4')
+  axios.get('/myplayers')
   .then((data) => {
-    setSortedData(data)
+    for (var i = 0; i < data.data.rows.length; i++) {
+      axios.get(`/statistics/players/playerId/${data.data.rows[i].playerid}`)
+      .then(data => {
+        function createData(vTeam, hTeam, points, tpa, totReb, assists) {
+          return { vTeam, hTeam, points, tpa, totReb, assists};
+        }
 
-    function createData(matchup, points, min, fgm, tpa, totReb, assists) {
-      return { matchup, points, min, fgm, tpa, totReb, assists};
+        if (data && data.hasOwnProperty('data') && data !== 'undefined') {
+          var rows1 = data.data.map(gameData => {
+            return createData( gameData.vteam_logo, gameData.hteam_logo, gameData.points, (gameData.tpa/gameData.tpm).toFixed(2), gameData.totReb, gameData.assists)}
+            )
+          setRows(rows1);
+        }
+      })
     }
-
-    if (data && data.hasOwnProperty('data') && data !== 'undefined') {
-      var rows1 = data.data.map(gameData => createData('MATCHUP', gameData.points, gameData.min, gameData.fgm, gameData.tpa, gameData.totReb, gameData.assists))
-      setRows(rows1);
-    }
-
 
   })
-})
+
+  }, [])
+
 
 
   return(
     <div className="container">
-      <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        component="img"
-        height="100%"
-        image="./203500.png"
-        alt="adams"
-        sx={{
-          backgroundColor: "#003049",
-          fontFamily: "Bebas Neue, cursive"
-          }
+    <Grid container spacing={0}>
+    <Grid item xs={4}>
+    <Card sx={{ maxWidth: 345 }}>
+    <CardMedia
+      component="img"
+      height="100%"
+      image={picture}
+      alt="k"
+      sx={{
+        backgroundColor: "#003049",
+        fontFamily: "Bebas Neue, cursive"
         }
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Steve Adams
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Date of Birth: 1993-07-20
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-          Country: New Zealand
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-          Start Nba: 2013
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-          Height: 2.11m
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-          Weight: 120.2kg
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Team: Memphis Grizzlies
-            </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" onClick={handleClick}>Show Stats</Button>
-        <Button size="small">Delete</Button>
-      </CardActions>
-    </Card>
+      }
+    />
+    <CardContent>
+      <Typography gutterBottom variant="h5" component="div">
+        {name}
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
 
-
-
-    <div className='divv'>
-    <TableContainer component={Paper}>
-    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-      <TableHead>
-        <TableRow>
-          <TableCell>MATCHUP</TableCell>
-          <TableCell align="right">Points</TableCell>
-          <TableCell align="right">Min</TableCell>
-          <TableCell align="right">fgm/fga/fgp</TableCell>
-          <TableCell align="right">tpa/tpm</TableCell>
-          <TableCell align="right">totReb</TableCell>
-          <TableCell align="right">assists</TableCell>
+      </Typography>
+    </CardContent>
+    <CardActions>
+      <Button size="small">Add to favorites</Button>
+    </CardActions>
+  </Card>
+  </Grid>
+  <Grid item xs={8}>
+  <h2>Last 5 games stats</h2>
+  <TableContainer component={Paper}>
+  <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+    <TableHead>
+      <TableRow>
+        <TableCell align="left">vTeam</TableCell>
+        <TableCell align="left">hTeam</TableCell>
+        <TableCell align="right">Points</TableCell>
+        <TableCell align="right">tpa/tpm</TableCell>
+        <TableCell align="right">totReb</TableCell>
+        <TableCell align="right">assists</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {rows.map((row) => (
+        <TableRow
+          key={row.name}
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        >
+          <TableCell  component="th" scope="row">
+            <img src={row.vTeam} align="left" width="45px" height="40px"/>
+          </TableCell>
+          <TableCell  component="th" align="left" scope="row">
+            <img src={row.hTeam} width="45px" height="40px"/>
+          </TableCell>
+          <TableCell align="right">{row.points}</TableCell>
+          <TableCell align="right">{row.tpa}</TableCell>
+          <TableCell align="right">{row.totReb}</TableCell>
+          <TableCell align="right">{row.assists}</TableCell>
         </TableRow>
-      </TableHead>
-      <TableBody>
-        {rows.map((row) => (
-          <TableRow
-            key={row.name}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-          >
-            <TableCell component="th" scope="row">
-              {row.name}
-            </TableCell>
-            <TableCell align="right">{row.points}</TableCell>
-            <TableCell align="right">{row.min}</TableCell>
-            <TableCell align="right">{row.fgm}</TableCell>
-            <TableCell align="right">{row.tpa}</TableCell>
-            <TableCell align="right">{row.totReb}</TableCell>
-            <TableCell align="right">{row.assists}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </TableContainer>
-  </div>
+      ))}
+    </TableBody>
+  </Table>
+</TableContainer>
+</Grid>
+</Grid>
 
-    </div>
+  </div>
 
   )
 }

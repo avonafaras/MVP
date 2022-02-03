@@ -18,12 +18,16 @@ import Grid from '@mui/material/Grid';
 
 const MainListEntry = ({playerId}) => {
   const [sortedData, setSortedData] = useState([])
-  const [rows, setRows] = useState([])
+  const [rows, setRows] = useState([]);
+  const [name, setName] = useState('');
+  const [picture, setPicture] = useState('')
 
   useEffect(() => {
     axios.get(`/statistics/players/playerId/${playerId}`)
     .then((data) => {
       setSortedData(data)
+      setName(data.data[0].firstname + ' ' +data.data[0].lastname  )
+      setPicture(data.data[0].pictures)
 
       function createData(vTeam, hTeam, points, tpa, totReb, assists) {
         return { vTeam, hTeam, points, tpa, totReb, assists};
@@ -38,6 +42,10 @@ const MainListEntry = ({playerId}) => {
     })
   }, [])
 
+  const addToFav = () => {
+    axios.post('/myplayers', {id: playerId})
+  }
+
   return (
       <div className="container">
       <Grid container spacing={0}>
@@ -46,8 +54,8 @@ const MainListEntry = ({playerId}) => {
       <CardMedia
         component="img"
         height="100%"
-        image="./203500.png"
-        alt="steve adams"
+        image={picture}
+        alt="k"
         sx={{
           backgroundColor: "#003049",
           fontFamily: "Bebas Neue, cursive"
@@ -56,14 +64,14 @@ const MainListEntry = ({playerId}) => {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-
+          {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
 
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Add to favorites</Button>
+        <Button size="small" onClick={addToFav}>Add to favorites</Button>
       </CardActions>
     </Card>
     </Grid>
