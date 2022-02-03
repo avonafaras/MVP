@@ -23,32 +23,19 @@ const [name, setName] = useState('');
 const [picture, setPicture] = useState('')
 
 
-const handleClick = () => {
+const handleClick = (playersIdsList, setPlayersIdsList) => {
   setClicked(!isClicked);
 }
 
-useEffect(() => {
-  axios.get('/myplayers')
-  .then((data) => {
-    for (var i = 0; i < data.data.rows.length; i++) {
-      axios.get(`/statistics/players/playerId/${data.data.rows[i].playerid}`)
-      .then(data => {
-        function createData(vTeam, hTeam, points, tpa, totReb, assists) {
-          return { vTeam, hTeam, points, tpa, totReb, assists};
-        }
+// useEffect(() => {
+//   axios.get('/myplayers')
+//   .then((data) => {
+//     var playerisds = data.data.rows.map(item => item.playerid)
+//     setPlayersIdsList(playerisds);
+//     })
+//   })
 
-        if (data && data.hasOwnProperty('data') && data !== 'undefined') {
-          var rows1 = data.data.map(gameData => {
-            return createData( gameData.vteam_logo, gameData.hteam_logo, gameData.points, (gameData.tpa/gameData.tpm).toFixed(2), gameData.totReb, gameData.assists)}
-            )
-          setRows(rows1);
-        }
-      })
-    }
-
-  })
-
-  }, [])
+//   }, [])
 
 
 

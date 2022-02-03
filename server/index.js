@@ -73,6 +73,13 @@ app.get('/myplayers', (req, res) => {
 app.post('/myplayers', (req, res) => {
   db.addPlayer(req.body.id)
   .then(() => console.log('success'))
+  .catch((err) => res.status(500).send(err))
+})
+
+app.delete('/myplayers/:id', (req, res) => {
+  db.deletePlayer(req.params.id)
+  .then(() => console.log('success'))
+  .catch((err) => res.status(500).send(err))
 })
 
 app.listen(PORT, () => {

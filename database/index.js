@@ -115,6 +115,10 @@ module.exports = {
 
    addPlayer(id) {
      return pool.query(`INSERT INTO myplayers (playerid) VALUES(${id})`)
-   }
+   },
 
+   deletePlayer(id) {
+     
+     return pool.query(`DELETE FROM myplayers WHERE playerid=${id}`)
+   }
 }

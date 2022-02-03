@@ -5,7 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const Header = ({handleClick}) => (
+const Header = ({handleClick, playersIdsList, setPlayersIdsList}) => (
   <div className="header">
      <Button sx={{ position: "absolute",right: 0, top: 0, bgcolor: "#fff"}} onClick={handleClick} variant="outlined" color="secondary" startIcon={<FavoriteIcon />}>
         Favorite players

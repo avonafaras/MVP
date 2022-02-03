@@ -35,7 +35,7 @@ const MainListEntry = ({playerId}) => {
 
       if (data && data.hasOwnProperty('data') && data !== 'undefined') {
         var rows1 = data.data.map(gameData => {
-          return createData( gameData.vteam_logo, gameData.hteam_logo, gameData.points, (gameData.tpa/gameData.tpm).toFixed(2), gameData.totReb, gameData.assists)}
+          return createData( gameData.vteam_logo, gameData.hteam_logo, gameData.points, (gameData.tpa + "/"+ gameData.tpm), gameData.totReb, gameData.assists)}
           )
         setRows(rows1);
       }
@@ -44,6 +44,11 @@ const MainListEntry = ({playerId}) => {
 
   const addToFav = () => {
     axios.post('/myplayers', {id: playerId})
+  }
+
+  const deletePlayer = () => {
+    axios.delete(`/myplayers/${playerId}`)
+    .then(() => {})
   }
 
   return (
@@ -72,6 +77,7 @@ const MainListEntry = ({playerId}) => {
       </CardContent>
       <CardActions>
         <Button size="small" onClick={addToFav}>Add to favorites</Button>
+        <Button size="small" onClick={deletePlayer}>Delete</Button>
       </CardActions>
     </Card>
     </Grid>
@@ -96,10 +102,10 @@ const MainListEntry = ({playerId}) => {
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell  component="th" scope="row">
-              <img src={row.vTeam} align="left" width="45px" height="40px"/>
+              <img src={row.vTeam} align="left" width="45px" height="43px"/>
             </TableCell>
             <TableCell  component="th" align="left" scope="row">
-              <img src={row.hTeam} width="45px" height="40px"/>
+              <img src={row.hTeam} width="45px" height="43px"/>
             </TableCell>
             <TableCell align="right">{row.points}</TableCell>
             <TableCell align="right">{row.tpa}</TableCell>

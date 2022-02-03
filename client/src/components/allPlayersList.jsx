@@ -24,7 +24,7 @@ const AllPlayersList = ({playersIdsList, setPlayersIdsList}) => {
           searchResults.map((item, index) => {
             return (
               <div key={index}>
-                <PlayersListEntry data={item} playersIdsList={playersIdsList} setPlayersIdsList={setPlayersIdsList}/>
+                <PlayersListEntry data={item} playersIdsList={playersIdsList} setPlayersIdsList={setPlayersIdsList} setSearchResults={setSearchResults} setSearchTerm={setSearchTerm}/>
               </div>
             )
           })

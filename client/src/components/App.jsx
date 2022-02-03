@@ -19,10 +19,12 @@ const App = () => {
 
 
   const handleClick = () => {
-    setClicked(!isClicked);
+    axios.get('/myplayers')
+    .then((data) => {
+    var playerisds = data.data.rows.map(item => item.playerid)
+    setPlayersIdsList(playerisds);
+    })
   }
-
-
 
   const theme = createTheme({
     typography: {
@@ -66,13 +68,12 @@ const App = () => {
         <Stack direction="row" spacing={2}>
 
       </Stack>
-        <Header handleClick={handleClick} />
-        {isClicked ? <MyCabinet /> :
-        <>
+        <Header handleClick={handleClick} playersIdsList={playersIdsList} setPlayersIdsList={setPlayersIdsList}/>
+
         <AllPlayersList playersIdsList={playersIdsList} setPlayersIdsList={setPlayersIdsList} />
-        <MainList playersIdsList={playersIdsList}/>
+        <MainList playersIdsList={playersIdsList} />
         <TopPlayers/>
-        </> }
+
       </div>
         </ThemeProvider>
 

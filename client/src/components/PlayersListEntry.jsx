@@ -2,7 +2,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
 import PlayerInfo from './PlayerInfo.jsx'
 
-const PlayersListEntry = ({data, playersIdsList, setPlayersIdsList}) => {
+const PlayersListEntry = ({data, playersIdsList, setPlayersIdsList, setSearchResults, setSearchTerm}) => {
   const [isPlayerClicked, setPlayerClicked] = useState(false);
   const [sortedData, setSortedData] = useState([])
 
@@ -17,6 +17,7 @@ const PlayersListEntry = ({data, playersIdsList, setPlayersIdsList}) => {
     // .then(() => {
     //   setPlayerClicked(!isPlayerClicked)
     // })
+    setSearchTerm('')
   }
   return (
 
